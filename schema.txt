@@ -1,0 +1,29 @@
+1: User : { id , name , phone, emailid , address, gender, password  }
+4: Foodtypes : { fooditems , foodtypes , userid }
+2: Orders : { id , orders , userid }
+3: Restaurants : { id , restaurantName , restaurantID , orderid , userid }
+5: Ratings : { id, rating , restaurantID  }
+Indiandelightdb database name
+
+
+CREATE TABLE IF NOT EXISTS Categories (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            Image VARCHAR(255) NOT NULL,
+            Name VARCHAR(255) NOT NULL,
+            Description VARCHAR(255) NOT NULL
+
+
+CREATE TABLE IF NOT EXISTS FoodItems (
+            id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            Image VARCHAR(255) NOT NULL,
+            Name VARCHAR(255) NOT NULL,
+            Description VARCHAR(255) NOT NULL,
+            CategoryID INT NOT NULL,
+            FOREIGN KEY (CategoryID) REFERENCES Categories(id)
+
+CREATE TABLE IF NOT EXISTS food_price_quantity (
+            id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            FoodID INT NOT NULL,
+            Price INT NOT NULL,
+            Quantity INT NOT NULL,
+            FOREIGN KEY (FoodID) REFERENCES FoodItems(id)

@@ -1,0 +1,148 @@
+[
+{
+    "Image" : "https:google.com",
+    "Name" : "Snacks",
+    "Description" : "lays"
+},
+{
+    "Image" : "https:google.com",
+    "Name" : "Snacks",
+    "Description" : "parle g"
+},
+{
+    "Image" : "https:google.com",
+    "Name" : "Vegetables & Fruits",
+    "Description" : "mango"
+},
+{
+    "Image" : "https:google.com",
+    "Name" : "Vegetables & Fruits",
+    "Description" : "banana"
+}
+{
+    "Image" : "https:google.com",
+    "Name" : "Vegetables & Fruits",
+    "Description" : "Orange"
+}
+{
+    "Image" : "https:google.com",
+    "Name" : "Beverages",
+    "Description" : "Coca cola"
+}
+{
+    "Image" : "https:google.com",
+    "Name" : "Beverages",
+    "Description" : "Sprite"
+}
+{
+    "Image" : "https:google.com",
+    "Name" : "Beverages",
+    "Description" : "Mirinda"
+}]
+
+
+fooditems 
+[{
+  "Image": "food_item1.jpg",
+  "Name": "Classic Margherita Pizza",
+  "Description": "A traditional Margherita pizza with a thin, crispy crust, tomato sauce, fresh mozzarella cheese, and basil leaves."
+  "CatergoryID" : "2"
+},
+
+{
+  "Image": "food_item2.jpg",
+  "Name": "Grilled Chicken Salad",
+  "Description": "A healthy salad featuring grilled chicken breast, mixed greens, cherry tomatoes, cucumbers, and balsamic vinaigrette."
+   "CatergoryID" : "2"
+},
+
+
+{
+  "Image": "food_item3.jpg",
+  "Name": "Spicy Tofu Stir-Fry",
+  "Description": "A flavorful stir-fry with crispy tofu, assorted vegetables, and a spicy soy sauce, served over steamed jasmine rice."
+  "CatergoryID" : "2"
+},
+
+{
+  "Image": "food_item4.jpg",
+  "Name": "Homemade Chocolate Brownie",
+  "Description": "A delectable chocolate brownie, freshly baked, and topped with a scoop of vanilla ice cream."
+  "CatergoryID" : "2"
+},
+
+{
+  "Image": "food_item5.jpg",
+  "Name": "Beef Tacos",
+  "Description": "Delicious beef tacos with seasoned ground beef, shredded lettuce, diced tomatoes, and a dollop of sour cream."
+  "CatergoryID" : "6"
+},
+
+{
+  "Image": "food_item6.jpg",
+  "Name": "Fruit Smoothie",
+  "Description": "A refreshing fruit smoothie made with a blend of fresh strawberries, bananas, and Greek yogurt."
+  "CatergoryID" : "6"
+},
+
+{
+  "Image": "food_item7.jpg",
+  "Name": "Chicken Alfredo Pasta",
+  "Description": "Creamy fettuccine Alfredo with tender pieces of grilled chicken and a sprinkling of grated Parmesan cheese."
+  "CatergoryID" : "6"
+},
+
+
+{
+  "Image": "food_item5.jpg",
+  "Name": "Beef Tacos",
+  "Description": "Delicious beef tacos with seasoned ground beef, shredded lettuce, diced tomatoes, and a dollop of sour cream."
+  "CatergoryID" : "10"
+},
+
+{
+  "Image": "food_item6.jpg",
+  "Name": "Fruit Smoothie",
+  "Description": "A refreshing fruit smoothie made with a blend of fresh strawberries, bananas, and Greek yogurt."
+  "CatergoryID" : "10"
+},
+
+{
+  "Image": "food_item7.jpg",
+  "Name": "Chicken Alfredo Pasta",
+  "Description": "Creamy fettuccine Alfredo with tender pieces of grilled chicken and a sprinkling of grated Parmesan cheese."
+  "CatergoryID" : "10"
+}
+{
+  "Image": "food_item5.jpg",
+  "Name": "Beef Tacos",
+  "Description": "Delicious beef tacos with seasoned ground beef, shredded lettuce, diced tomatoes, and a dollop of sour cream."
+  "CatergoryID" : "12"
+},
+
+{
+  "Image": "food_item6.jpg",
+  "Name": "Fruit Smoothie",
+  "Description": "A refreshing fruit smoothie made with a blend of fresh strawberries, bananas, and Greek yogurt.",
+  "CatergoryID" : "12"
+},
+
+{
+  "Image": "food_item7.jpg",
+  "Name": "Chicken Alfredo Pasta",
+  "Description": "Creamy fettuccine Alfredo with tender pieces of grilled chicken and a sprinkling of grated Parmesan cheese."
+  "CatergoryID" : "12"
+}]
+
+
+[{
+    "FoodID" : "2",
+    "Price" : "2000",
+   "Quantity" : "4"
+},
+{
+    "FoodID" : "1",
+    "Price" : "5000",
+   "Quantity" : "1"
+},
+]
