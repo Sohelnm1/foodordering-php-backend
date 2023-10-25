@@ -61,8 +61,10 @@ class CategoriesController extends Controller
     } else {
         return response()->json(['message' => 'Category not found'], 404);
     }
-}
+    }
 
-
+    public function categoryname($name){
+        return categories::where('Name' ,'like', '%'.$name.'%')->get();
+    }
     
 }

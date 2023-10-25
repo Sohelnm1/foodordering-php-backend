@@ -53,13 +53,37 @@ class FoodItemsController extends Controller
 
     public function foodwithcatergoryprice(){
 
-        $food = fooditems::with(["foodcategory", "foodcategory.fooditemsmodel"])->get();
+        $food = fooditems::with(["foodcategory","foodprice" ])->get();
+
 
         if($food){
+            // return response()->json([
+            //     "Name" => $food->foodwithcatergoryprice->Name,
+            //     "Description" => $food->foodwithcatergoryprice->Description,
+            // ]);
             return response()->json($food);
         }
         else{
             return response()->json(['message' => 'not found']);
         }
     }
+
+    // public function foodwithcatergoryprice() {
+    // $food = fooditems::with(["foodcategory", "foodprice"])->get();
+
+    // $result = [];
+
+    // foreach ($food as $fooditem) {
+    //     $result[] = [
+    //         "Name" => $fooditem->foodcategory->Name,
+    //         "Description" => $fooditem->foodcategory->Description,
+    //     ];
+    // }
+
+    // if (!empty($result)) {
+    //     return response()->json($result);
+    // } else {
+    //     return response()->json(['message' => 'not found']);
+    // }
+    // }
 }

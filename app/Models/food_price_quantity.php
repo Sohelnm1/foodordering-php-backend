@@ -27,7 +27,7 @@ class food_price_quantity extends Model
         });
     }
 
-    // public function fooditemsmodel(){
-    //     return $this->belongsTo(fooditems::class, "FoodID" , "id");
-    // }
+    public function fooditemsmodel(){
+        return $this->belongsTo(fooditems::class, "FoodID" , "id");
+    }
 }

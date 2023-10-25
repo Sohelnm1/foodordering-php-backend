@@ -146,3 +146,16 @@ fooditems
    "Quantity" : "1"
 },
 ]
+
+
+{
+            "Name" : "fried rice",
+            "Amount" : 250,
+            "Qty" : 2,
+            "FoodID" : 1,
+            "Userid" : 1
+} 
+
+{
+  Name
+}

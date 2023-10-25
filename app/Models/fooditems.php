@@ -33,7 +33,8 @@ class fooditems extends Model
         });
     }
 
-    // public function foodcategory(){
-    //     return $this->belongsTo(categories::class, "CatergoryID" , "id");
-    // }
+    public function foodcategory(){
+        return  $this->belongsTo(categories::class,"CatergoryID","id");
+
+    }
 }
