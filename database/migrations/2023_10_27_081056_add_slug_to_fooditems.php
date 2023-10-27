@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::table('fooditems', function (Blueprint $table) {
             //
             $table->string('slug')->unique();
+
         });
     }
 
@@ -25,6 +26,7 @@ return new class extends Migration
         Schema::table('fooditems', function (Blueprint $table) {
             //
             $table->dropColumn('slug');
+
         });
     }
 };

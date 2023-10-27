@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
+use App\Models\fooditems;
+
 class categories extends Model
 {
     use HasFactory;
-    protected $hidden = ['id','status'];
+    protected $hidden = ['status','created_at','updated_at','branch_id'];
     protected $table = 'categories';
-    protected $fillable = ['Image','Name','Description','slug'];
+    protected $fillable = ['Image','Name','Description','branch_id','slug'];
 
     public function fooditem() {
         return $this->hasMany(fooditems::class, "CatergoryID", "id");

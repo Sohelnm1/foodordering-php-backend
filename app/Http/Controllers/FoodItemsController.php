@@ -86,4 +86,8 @@ class FoodItemsController extends Controller
     //     return response()->json(['message' => 'not found']);
     // }
     // }
+
+    public function fooditembycategory(Request $request, $categoryname){
+        
+    }
 }

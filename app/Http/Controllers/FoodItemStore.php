@@ -15,7 +15,9 @@ class FoodItemStore extends Controller
             "Image" => "required|string",
             "Name" => "required|string",
             "Description" => "required|string",
-            "CatergoryID" => "required|integer"
+            "CatergoryID" => "required|integer",
+            "branch_id" => "required|integer"
+
         ]);
         $result = fooditems::create($data);
 

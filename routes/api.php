@@ -12,8 +12,7 @@ use App\Http\Controllers\FoodItemCategoryController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\OrderController;
-
-
+use App\Http\Controllers\BranchController;
 
 
 
@@ -32,36 +31,68 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Branch store 
+Route::post('/branchstore',[BranchController::class,'store']);
+
+// Branch display
+Route::get('/branchget',[BranchController::class,'get']);
+
+// category display by branch id
+Route::get('/branch/{branchid}/categorybybranch',[BranchController::class, 'getcategorybybranch']);
+
+// category display by branch name not working
+Route::get('/branch/{branchname}/categorybybranchname',[BranchController::class, 'getcategorybybranchname']);
+
+// food display by branchname not working
+Route::get('/branch/{branchname}/foodbybranch',[BranchController::class, 'foodbybranch']);
+
+// category store by branchname 
+Route::post('/branch/{branchname}/newcategory',[BranchController::class,"newcategorybybranch"]);
+
+// Food store by branchname & categoryname
+Route::post('/branch/{branchname}/newfood/{categoryname}', [BranchController::class,"newfoodbybranch"]);
+
+// Food display by branchname & categoryname 
+Route::get('/branch/{branchame}/category/{categoryname}',[BranchController::class, "displayfoodbybranchcategory"]);
+
+// Update delete pending from branch and display also
+
+
 //  Display all catergories list 
 Route::get("/categories",[CategoriesController::class,'display']);
+
+//  Store new category 
+Route::post('/categoriestore',[CategoryStore::class,'store']);
 
 //  Display all fooditems list 
 Route::get("/foods",[FoodItemsController::class,'getall']);
 
-//  Display all foodprice list 
-Route::get("/foodprice",[FoodPriceQuantityController::class,'getall']);
-
-//  Store new category
-Route::post('/categoriestore',[CategoryStore::class,'store']);
-
 //  Store new fooditems
 Route::post('/fooditems',[FoodItemStore::class,'foodstore']);
-
-//  Store new fooditem price
-Route::post('/foodprice',[FoodPriceStore::class,'store']);
-
 
 // Display all food with their category and price 
 Route::get("/getfood", [FoodItemsController::class,'foodwithcatergoryprice']);
 
+// Display all food with category name 
+Route::get("/getfood/{categoryname}", [FoodItemsController::class,'fooditembycategory']);
+// in process
+
+//  Display all foodprice list 
+Route::get("/foodprice",[FoodPriceQuantityController::class,'getall']);
+
+//  Store new fooditem price
+Route::post('/foodprice',[FoodPriceStore::class,'store']);
+
+// Login api
 Route::post('/auth/login',[AuthController::class,'login']);
 
+// Register api
 Route::post('/auth/register',[AuthController::class,'register']);
 
 
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::post('/logout',[AuthController::class,'logout']);
+    Route::post('/auth/logout',[AuthController::class,'logout']);
 
     // get category by name 
     Route::post("/catergorybyname/{name}",[CategoriesController::class, 'categoryname']);
@@ -84,10 +115,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //  Update Food item
     Route::put('/updateprice/{id}', [FoodPriceQuantityController::class, 'updateprice']);
 
-    // Delete foodprice
+    // Delete foodprice 
     Route::get("/foodpricedelete", [FoodPriceQuantityController::class,'deleteprice']);
 
-    // New Address store
+    // New Address store 
     Route::post('/useraddress', [AddressController::class,"newaddress"]);
 
     // New address by user 

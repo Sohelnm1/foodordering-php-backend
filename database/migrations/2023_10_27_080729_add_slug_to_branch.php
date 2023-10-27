@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('order', function (Blueprint $table) {
+        Schema::table('branch', function (Blueprint $table) {
             //
             $table->string('slug')->unique();
+
         });
     }
 
@@ -22,9 +23,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('order', function (Blueprint $table) {
+        Schema::table('branch', function (Blueprint $table) {
             //
             $table->dropColumn('slug');
+
         });
     }
 };

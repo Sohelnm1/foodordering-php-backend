@@ -9,12 +9,24 @@ class CategoryStore extends Controller
 {
     //
      public function store(Request $request){
-        $data = $request->all();
-        // $data['status'] = 0;
-        $result = categories::create($data);
+    $category = new categories();
+    $category->Name = $request->input('Name');
+    $category->branch_id = $request->input('branch_id');
+    $category->Description = $request->input('Description');
 
-        return response()->json( ['message' => 'added sucessfully', 'data' => $result], 201 );
+    if ($request->hasFile('file')) {
+        $file = $request->file('file');
+        $category->Image = $file->getClientOriginalName();
+        $file->move('uploads/', $category->Image);
+    } else {
+            return response(['message' => "no file uploaded"]);
     }
+
+    $category->save();
+
+    return response()->json(['message' => 'added successfully'], 201);
+}
+
 
     
 }

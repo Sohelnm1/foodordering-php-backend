@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('branch', function (Blueprint $table) {
             //
-            $table->string('slug')->unique();
+            $table->string('branchtime')->nullable(false);
         });
     }
 
@@ -22,9 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('branch', function (Blueprint $table) {
             //
-            $table->dropColumn('slug');
+            $table->dropColumn('branchtime');
         });
     }
 };

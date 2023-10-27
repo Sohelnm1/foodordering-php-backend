@@ -11,16 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fooditems', function (Blueprint $table) {
+        Schema::create('branch', function (Blueprint $table) {
             $table->id();
-            $table->string("Image")->nullable(false);
-            $table->string("Name")->nullable(false)->unique();
-            $table->string("Description")->nullable(false);
-            $table->unsignedBigInteger("CatergoryID")->nullable(false);
+            $table->string('name')->nullable(false);
+            $table->string('phone')->nullable(false);
+            $table->string('address')->nullable(false);
+            $table->string('email')->nullable(false);
+            $table->string('longitude')->nullable(false);
+            $table->string('latitude')->nullable(false);
             $table->boolean('status')->nullable(false)->default(0);
             $table->timestamps();
-            
-            $table->foreign('CatergoryID')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fooditems');
+        Schema::dropIfExists('branch');
     }
 };
