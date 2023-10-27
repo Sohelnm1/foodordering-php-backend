@@ -88,6 +88,10 @@ class FoodItemsController extends Controller
     // }
 
     public function fooditembycategory(Request $request, $categoryname){
-        
+        $food = fooditems::whereHas('foodcategory', function ($query) use ($categoryname) {
+            $query->where('slug',$categoryname);
+        })->get();
+
+        return response($food);
     }
 }

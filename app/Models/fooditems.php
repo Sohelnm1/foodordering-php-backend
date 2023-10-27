@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\categories;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 
@@ -12,7 +13,7 @@ use Illuminate\Support\Str;
 class fooditems extends Model
 {
     use HasFactory;
-    protected $hidden = ['id','status'];
+    protected $hidden = ['id','status','created_at','updated_at'];
     protected $table = 'fooditems';
     protected $fillable = ['Image','Name','Description','CatergoryID','branch_id'];
 

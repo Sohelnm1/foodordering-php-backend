@@ -83,6 +83,7 @@ Route::get("/foodprice",[FoodPriceQuantityController::class,'getall']);
 //  Store new fooditem price
 Route::post('/foodprice',[FoodPriceStore::class,'store']);
 
+
 // Login api
 Route::post('/auth/login',[AuthController::class,'login']);
 
