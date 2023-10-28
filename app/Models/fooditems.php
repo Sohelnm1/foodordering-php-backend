@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 class fooditems extends Model
 {
     use HasFactory;
-    protected $hidden = ['id','status','created_at','updated_at'];
+    protected $hidden = ['id','status','created_at','updated_at','CatergoryID','branch_id'];
     protected $table = 'fooditems';
     protected $fillable = ['Image','Name','Description','CatergoryID','branch_id'];
 

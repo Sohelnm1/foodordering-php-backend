@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 use App\Models\categories;
 use App\Models\fooditems;
+use App\Models\Partners;
 
 class Branch extends Model
 {
@@ -35,5 +36,11 @@ class Branch extends Model
     public function food() {
         return $this->hasMany(fooditems::class, "branch_id", "id");
     }
+
+    public function partners() {
+        return $this->hasMany(Partners::class, "branch_id", "id");
+    }
+
+    
 
 }

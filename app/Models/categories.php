@@ -12,7 +12,7 @@ use App\Models\fooditems;
 class categories extends Model
 {
     use HasFactory;
-    protected $hidden = ['status','created_at','updated_at','branch_id'];
+    protected $hidden = ['status','created_at','updated_at','branch_id','id'];
     protected $table = 'categories';
     protected $fillable = ['Image','Name','Description','branch_id','slug'];
 

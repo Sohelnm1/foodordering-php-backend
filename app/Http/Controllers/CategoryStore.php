@@ -19,7 +19,7 @@ class CategoryStore extends Controller
         $category->Image = $file->getClientOriginalName();
         $file->move('uploads/', $category->Image);
     } else {
-            return response(['message' => "no file uploaded"]);
+        return response(['message' => "no file uploaded"]);
     }
 
     $category->save();

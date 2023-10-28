@@ -12,28 +12,64 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    //
     public function register(Request $request) {
-        $fields = $request->validate([
-            "name" => "required|string",
-            "email" => "required|string|unique:users,email",
-            "password" => "required|string|confirmed"
-        ]);
 
-        $user = User::create([
-            "name" => $fields['name'],
-            "email" => $fields['email'],
-            "password" => bcrypt($fields['password'])
-        ]);
 
-        $token = $user->createToken('myapptoken')->plainTextToken;
+        if ($request->has('usertype')) {
+            $usertype = $request->input('usertype');
+        } else {
+            return response()->json(['error' => 'Usertype is required'], 400);
+        }
+
+        if ($usertype == 'guest') {
+
+            $fields = $request->validate([
+                "name" => "required|string",
+                "email" => "required|string",
+                "phone" => "required|integer",
+                'usertype' => 'required|string'
+            ]);
+
+
+            $user = User::create([
+                "name" => $fields['name'],
+                "email" => $fields['email'],
+                "phone" => $fields['phone'],
+                "usertype" => $usertype,
+            ]);
+            
+            return response()->json($user, 201);
+            
+            } elseif($usertype == 'user') {
         
-        $response = [
-            "user" => $user,
-            "token" => $token
-        ];
+            $fields = $request->validate([
+                "password" => 'required|string',
+                "email" => "required|string|unique:users,email",
+                "name" => "required|string",
+                "phone" => "required|integer",
+                'usertype' => 'required|string'
 
-        return response()->json($response, 201);
+            ]);
+            
+            $user = User::create([
+                "name" => $fields['name'],
+                "email" => $fields['email'],
+                "phone" => $fields['phone'],
+                "usertype" => $usertype,
+                "password" => bcrypt($fields['password'])
+            ]);
+            
+            $token = $user->createToken('myapptoken')->plainTextToken;
+            
+            $response = [
+                "user" => $user,
+                "token" => $token
+            ];
+            return response()->json($response, 201);
+        }
+        else {
+            return response()->json(['error' => 'invalid user type']);
+        }
     }
 
 
@@ -45,31 +81,39 @@ class AuthController extends Controller
             'message' => "logged out"
         ];
     }
-    public function login(Request $request){
+    
+
+    public function login(Request $request) {
         $fields = $request->validate([
             "email" => "required|string",
             "password" => "required|string"
         ]);
 
-        // check email
-       $user = User::where('email' , $fields['email'])->first();
+        $user = User::where('email', $fields['email'])->first();
 
-        // check password
-
-        if(!$user || !Hash::check($fields['password'], $user->password) ){
-            return response()->json([
-                "message" => "Invalid user"
-            ], 401);
+        if (!$user) {
+            return response()->json(['error' => 'Email not registered'], 404);
         }
 
-        $token = $user->createToken('myapptoken')->plainTextToken;
-        
-        $response = [
-            "user" => $user,
-            "token" => $token
-        ];
+        if ($user->usertype === 'guest') {
+            return response()->json(['error' => 'Guest users cannot log in'], 403);
+        } elseif ($user->usertype === 'user') {
+            if (!Hash::check($fields['password'], $user->password)) {
+                return response()->json(['error' => 'Invalid credentials'], 401);
+            }
 
-        return response($response, 201);
-        
+            $token = $user->createToken('myapptoken')->plainTextToken;
+
+            $response = [
+                "user" => $user,
+                "token" => $token
+            ];
+
+            return response($response, 201);
+        } else {
+            return response()->json(['error' => 'Invalid user'], 403);
+        }
     }
+
+    
 }

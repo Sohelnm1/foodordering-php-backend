@@ -64,7 +64,7 @@ class CategoriesController extends Controller
     }
 
     public function categoryname($name){
-        return categories::where('Name' ,'like', '%'.$name.'%')->get();
+        return categories::where('slug' ,$name)->get();
     }
     
 }

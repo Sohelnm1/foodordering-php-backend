@@ -13,6 +13,8 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\PartnersController;
+
 
 
 
@@ -31,20 +33,43 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// send csrf token to frontend
+Route::get('/csrf-token', function () {
+    return response()->json(['csrf_token' => csrf_token()]);
+});
+
+
+// Store all partners 
+Route::post('/partnerstore', [PartnersController::class,'store']);
+
+// display all partners 
+Route::get('/partners', [PartnersController::class,'displaypartners']);
+
+// store partners by branchname
+Route::post('/{branchname}/partnerstore', [PartnersController::class,'partnerstorebybranch']);
+
+// Display partners by branchname
+Route::get('/{branchname}/partners',[PartnersController::class,'partnersbybranch']);
+
+
+
 // Branch store 
 Route::post('/branchstore',[BranchController::class,'store']);
 
 // Branch display
 Route::get('/branchget',[BranchController::class,'get']);
 
+// display all categories & their foods by branchname 
+Route::get('/branch/{branchname}',[BranchController::class,'getcategoryfood']);
+
 // category display by branch id
 Route::get('/branch/{branchid}/categorybybranch',[BranchController::class, 'getcategorybybranch']);
 
-// category display by branch name not working
+// category display by branch name
 Route::get('/branch/{branchname}/categorybybranchname',[BranchController::class, 'getcategorybybranchname']);
 
-// food display by branchname not working
-Route::get('/branch/{branchname}/foodbybranch',[BranchController::class, 'foodbybranch']);
+// food display by branchname
+Route::get('/branch/{branchname}/foodbybranch',[BranchController::class, 'foodbybranchname']);
 
 // category store by branchname 
 Route::post('/branch/{branchname}/newcategory',[BranchController::class,"newcategorybybranch"]);
@@ -83,12 +108,14 @@ Route::get("/foodprice",[FoodPriceQuantityController::class,'getall']);
 //  Store new fooditem price
 Route::post('/foodprice',[FoodPriceStore::class,'store']);
 
-
 // Login api
 Route::post('/auth/login',[AuthController::class,'login']);
 
 // Register api
 Route::post('/auth/register',[AuthController::class,'register']);
+
+// // Login by guest 
+// Route::post('/auth/guestlogin' , [AuthController::class,'guestlogin']);
 
 
 // Protected routes
@@ -161,5 +188,4 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     // delete user orders
     Route::post('/user/{name}/orderdelete/{order}', [OrderController::class, "userdelete"]);
-
 });

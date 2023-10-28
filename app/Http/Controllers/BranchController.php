@@ -24,11 +24,14 @@ class BranchController extends Controller
 
         return response()->json(['message' => "New branch added" , 'data' => $response]);
     }
+    
     public function get(){
         $response = Branch::all();
-
+        
         return response()->json(['message' => "here's your data" , 'data' => $response]);
     }
+
+    
     
     public function getcategorybybranch(Request $request, $branchname){
         // $branchname = $request->input('id');
@@ -38,57 +41,44 @@ class BranchController extends Controller
         return response()->json($data);
     }
 
-     public function getcategorybybranchname(Request $name){
-        $category = Branch::whereHas('category', function ($query) use ($name) {
-            $query->where('name', 'like', '%'.$name.'%');
-        })->with('category')->get();
+    public function getCategoryByBranchName($branchname) {
+        $branch = Branch::where('slug', $branchname)->first();
 
-        return response($category);
+        if ($branch) {
+            $categories = $branch->category()
+                ->select('id', 'Name', 'Description', 'Image') 
+                ->get();
 
-        
-
-        // $result = [];
-        // foreach( $category as $data ){
-        //     if($data['status'] === 0){
-        //         $result[] = $data;
-        //     }
-        // }
-        // if($result){
-        //     return response()->json($result);
-        // }
-        // else{
-        //     return response()->json(['message' => 'No category found']);
-        // } 
+            if ($categories->isNotEmpty()) {
+                return response()->json(['message' => 'Categories for this branch', 'data' => $categories]);
+            } else {
+                return response()->json(['message' => 'No categories found for this branch']);
+            }
+        } else {
+            return response()->json(['message' => 'No branch by this name']);
+        }
     }
 
-    // public function foodbybranch(Request $name){
-    //     $foods = Branch::whereHas('food', function ($query) use ($name) {
-    //         $query->where('name', 'like', '%'.$name.'%');
-    //     })->get();
 
-    //     return response($foods);
-    // }
 
-    public function foodbybranch($name){
-        $addresses = Branch::whereHas('food', function ($query) use ($name) {
-            $query->where('phone', 'like', '%'.$name.'%');
-        })->with('food:id,Name')->get();
+    public function foodbybranchname(Request $request, $branchname) {
+        $branch = Branch::where('slug', $branchname)->first();
 
-        return response($addresses);
+        if ($branch) {
+            $foodItems = $branch->food()
+                ->select('id', 'Name', 'Description', 'Image')
+                ->get();
 
-        // $result = [];
-        // foreach( $addresses as $data ){
-        //     if($data['status'] === 0){
-        //         $result[] = $data;
-        //     }
-        // }
-        // if($result){
-        //     return response()->json($result);
-        // }
-        // else{
-        //     return response()->json(['message' => 'No Address found']);
-        // } 
+            if ($foodItems->isNotEmpty()) {
+            return response()->json(['message' => 'Food items in this branch', 'data' => $foodItems]);
+            } else {
+            return response()->json(['message' => 'No food items in this branch']);
+        }
+        } else {
+        return response()->json(['message' => 'No branch by this name']);
+        }
     }
+
 
     public function newcategorybybranch(Request $request, $branchname ){
         $data = $request->validate([
@@ -97,7 +87,8 @@ class BranchController extends Controller
             "Description" => "required|string",
         ]);
 
-        $branch = Branch::where('name', 'like', '%' . $branchname . '%')->first();
+        $branch = Branch::where('slug',$branchname)->first();
+
 
             if ($branch) {
         
@@ -109,7 +100,7 @@ class BranchController extends Controller
                 if ($request->hasFile('file')) {
                     $file = $request->file('file');
                     $category->Image = $data['file']->getClientOriginalName();
-                    $file->move('uploads/', $category->Image);
+                    $file->move('uploads/category/', $category->Image);
                 } 
                 else 
                 {
@@ -135,12 +126,12 @@ class BranchController extends Controller
         ]);
         
 
-        $branch = Branch::where('slug', 'like', '%' . $branchname . '%')->first();
+        $branch = Branch::where('slug',$branchname)->first();
 
         // return response($branch);
 
         if ($branch) {
-            $categories = $branch->category()->where('Name', 'like', '%' . $categoryname . '%')->select('id', 'Name')->get();
+            $categories = $branch->category()->where('slug',$categoryname)->select('id', 'Name')->get();
 
             // return response($categories);
 
@@ -188,7 +179,7 @@ class BranchController extends Controller
 
         if ($branch) {
             $foodItems = $branch->food()->whereHas('foodcategory', function ($query) use ($categoryname) {
-                $query->where('Name', $categoryname);
+                $query->where('slug', $categoryname);
             })->select('id', 'Name', 'Description', 'Image')->get();
 
             if ($foodItems->isNotEmpty()) {
@@ -201,7 +192,22 @@ class BranchController extends Controller
         {
             return response()->json(['message' => 'No branch by this name']);
         }
+    }
+
+    public function getCategoryFood($branchname)
+    {
+        $branch = Branch::where('name', $branchname)->first();
+
+        if (!$branch) {
+            return response()->json(['message' => 'Branch not found'], 404);
+        }
+
+        $categoriesWithFoods = $branch->category()->with('fooditem')->get();
+
+        return response()->json(['data' => $categoriesWithFoods]);
 }
+
+
 
 
 
