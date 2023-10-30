@@ -18,11 +18,15 @@ return new class extends Migration
             $table->integer('Qty')->nullable(false);
             $table->unsignedBigInteger('FoodID')->nullable(false);
             $table->unsignedBigInteger('Userid')->nullable(false);
+            $table->unsignedBigInteger('branch_id')->nullable(false);
+            $table->integer('Order_id')->nullable(false);
             $table->boolean('status')->default(0);
             $table->timestamps();
 
             $table->foreign('FoodID')->references('id')->on('fooditems')->onDelete('cascade');
             $table->foreign('Userid')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('branch_id')->references('id')->on('branch')->onDelete('cascade');
+
 
         });
     }

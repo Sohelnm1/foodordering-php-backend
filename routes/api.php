@@ -14,6 +14,7 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\PartnersController;
+use Illuminate\Support\Str;
 
 
 
@@ -32,6 +33,19 @@ use App\Http\Controllers\PartnersController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Route::get('/token', function (Request $request) {
+//     $token = $request->session()->token();
+ 
+//     $token = csrf_token();
+//     return response()->json(['token' => $token]);
+
+// });
+
+// Route::get('/csrf-token', function () {
+//     $token = Str::random(32); // Generate a random token
+//     return response()->json(['token' => $token]);
+// });
 
 // send csrf token to frontend
 Route::get('/csrf-token', function () {
@@ -114,13 +128,13 @@ Route::post('/auth/login',[AuthController::class,'login']);
 // Register api
 Route::post('/auth/register',[AuthController::class,'register']);
 
-// // Login by guest 
-// Route::post('/auth/guestlogin' , [AuthController::class,'guestlogin']);
+// Login by guest 
+Route::post('/auth/guestlogin' , [AuthController::class,'guestlogin']);
 
 
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::post('/auth/logout',[AuthController::class,'logout']);
+    // Route::post('/auth/logout',[AuthController::class,'logout']);
 
     // get category by name 
     Route::post("/catergorybyname/{name}",[CategoriesController::class, 'categoryname']);
@@ -188,4 +202,18 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     // delete user orders
     Route::post('/user/{name}/orderdelete/{order}', [OrderController::class, "userdelete"]);
+});
+
+
+// Route::controller(AuthController::class)->group(function () {
+//     Route::post('login', 'login');
+//     Route::post('register', 'register');
+//     Route::post('logout', 'logout');
+//     Route::post('refresh', 'refresh');
+// });
+
+Route::middleware(['api'])->group(function() {
+    Route::post('/login', [AuthControllerJWT::class, 'login']);
+    Route::post('/register', [AuthControllerJWT::class, 'register']);
+    Route::get('/getaccount', [AuthControllerJWT::class, 'getaccount']);
 });

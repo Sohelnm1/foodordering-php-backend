@@ -8,14 +8,16 @@ use App\Models\fooditems;
 class FoodItemsController extends Controller
 {
     //
+
     public function getall() {
+        $result = [];
         $datas = fooditems::all();    
         foreach( $datas as $data ){
             if($data['status'] === 0){
                 $result[] = $data;
             }
         }
-        if($result> 0){
+        if($result){
             return response()->json($result);
         }
         else{
